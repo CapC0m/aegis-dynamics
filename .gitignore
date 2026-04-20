@@ -1,0 +1,32 @@
+@"
+# Build outputs
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+
+# Locks and caches
+*.lock
+*.vsidx
+*.tmp
+*.cache
+
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Binaries and releases
+*.dll
+*.pdb
+*.zip
+release/
+"@ | Set-Content .gitignore

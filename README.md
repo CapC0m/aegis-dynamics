@@ -1,4 +1,4 @@
-# Stoke Engine
+# Aegis Dynamics
 [![SpaceDock](https://img.shields.io/badge/SpaceDock-Download-5bc0de)](https://spacedock.info/mod/4218/Stoke%20Engine#info)
 
 A Kerbal Space Program mod adding reusable-style second-stage engines inspired by [Stoke Space's](https://www.stokespace.com/) Andromeda. Each part is a heatshield with a ring of thrust chambers around its perimeter — thrust vector control is achieved by differentially throttling the chambers instead of gimbaling a nozzle.
@@ -34,7 +34,7 @@ _(Not yet listed — coming soon)_
 ### Manual
 1. Download the latest release zip
 2. Extract the `GameData/` folder into your KSP install
-3. Verify `GameData/StokeEngine/` exists
+3. Verify `GameData/AegisDynamics/` exists
 
 ## Dependencies
 
@@ -48,7 +48,7 @@ Recommended:
 
 ## Known limitations
 
-- No roll authority from the engine (by design — add reaction wheels)
+- No roll authority from the engine (by design, you should add reaction wheels)
 - Uses stock heatshield models for visuals (custom model planned for v0.2+)
 - 1.875m and 5m variants are rescaled stock heatshields; proportions may look slightly off
 - No RealFuels support yet (planned for v0.2)
@@ -75,8 +75,15 @@ Issues and PRs welcome. This is an early mod; expect rough edges.
 CC-BY-NC-SA 4.0 — see `LICENSE` for details.
 
 ## Changelog
+### v0.1.1
+⚠️ Breaking change: Craft files using v0.1.0 parts will not load with v0.1.1 — the part names changed. If you have saved craft using previous versions, you'll need to rebuild them with the new Aegis parts.
 
-### v0.1 (unreleased)
+- Mod renamed: Stoke Engine → Aegis Dynamics
+- Manufacturer renamed: Stoke-Analog Industries → Aegis Dynamics
+- Parts renamed with Greek shield theme: Aspis / Pelta / Hoplon / Thureos / Scutum
+- Engine re-tuning
+
+### v0.1
 - Initial release
 - Five diameter variants
 - Differential-throttle TVC with MechJeb compatibility
