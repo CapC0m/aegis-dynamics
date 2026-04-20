@@ -3,10 +3,10 @@
 A Kerbal Space Program mod adding reusable-style second-stage engines inspired by [Stoke Space's](https://www.stokespace.com/) Andromeda. Each part is a heatshield with a ring of thrust chambers around its perimeter — thrust vector control is achieved by differentially throttling the chambers instead of gimbaling a nozzle.
 
 ## Screenshots
-docs/screenshot0.png
-docs/screenshot2.png
-docs/screenshot3.png
-docs/screenshot8.png
+docs\screenshot0.png
+docs\screenshot2.png
+docs\screenshot3.png
+docs\screenshot8.png
 
 ## Features
 
