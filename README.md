@@ -2,6 +2,8 @@
 
 A Kerbal Space Program mod adding reusable-style second-stage engines inspired by [Stoke Space's](https://www.stokespace.com/) Andromeda. Each part is a heatshield with a ring of thrust chambers around its perimeter — thrust vector control is achieved by differentially throttling the chambers instead of gimbaling a nozzle.
 
+[![SpaceDock](https://img.shields.io/badge/SpaceDock-Download-5bc0de)](https://spacedock.info/mod/4218/Stoke%20Engine#info)
+
 ## Gallery
 
 ![Ring of chambers firing during ascent](docs/ascent.png)
