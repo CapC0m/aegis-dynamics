@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\HelloKSP\\HelloKSP\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7978AE5D-EE6E-47F1-BE04-1FFE197AB107}|StokeEngine\\StokeEngine\\StokeEngine.csproj|c:\\helloksp\\helloksp\\stokeengine\\stokeengine\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{7978AE5D-EE6E-47F1-BE04-1FFE197AB107}|StokeEngine\\StokeEngine\\StokeEngine.csproj|solutionrelative:stokeengine\\stokeengine\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7978AE5D-EE6E-47F1-BE04-1FFE197AB107}|StokeEngine\\StokeEngine\\StokeEngine.csproj|c:\\helloksp\\helloksp\\stokeengine\\stokeengine\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{7978AE5D-EE6E-47F1-BE04-1FFE197AB107}|StokeEngine\\StokeEngine\\StokeEngine.csproj|solutionrelative:stokeengine\\stokeengine\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7978AE5D-EE6E-47F1-BE04-1FFE197AB107}|StokeEngine\\StokeEngine\\StokeEngine.csproj|c:\\helloksp\\helloksp\\stokeengine\\stokeengine\\stokeengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7978AE5D-EE6E-47F1-BE04-1FFE197AB107}|StokeEngine\\StokeEngine\\StokeEngine.csproj|solutionrelative:stokeengine\\stokeengine\\stokeengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "README.md",
+              "DocumentMoniker": "C:\\HelloKSP\\HelloKSP\\StokeEngine\\StokeEngine\\README.md",
+              "RelativeDocumentMoniker": "StokeEngine\\StokeEngine\\README.md",
+              "ToolTip": "C:\\HelloKSP\\HelloKSP\\StokeEngine\\StokeEngine\\README.md",
+              "RelativeToolTip": "StokeEngine\\StokeEngine\\README.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-04-20T16:07:35.497Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": ".gitignore",
+              "DocumentMoniker": "C:\\HelloKSP\\HelloKSP\\StokeEngine\\StokeEngine\\.gitignore",
+              "RelativeDocumentMoniker": "StokeEngine\\StokeEngine\\.gitignore",
+              "ToolTip": "C:\\HelloKSP\\HelloKSP\\StokeEngine\\StokeEngine\\.gitignore",
+              "RelativeToolTip": "StokeEngine\\StokeEngine\\.gitignore",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-04-20T16:06:45.729Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "StokeEngine.cs",
+              "DocumentMoniker": "C:\\HelloKSP\\HelloKSP\\StokeEngine\\StokeEngine\\StokeEngine.cs",
+              "RelativeDocumentMoniker": "StokeEngine\\StokeEngine\\StokeEngine.cs",
+              "ToolTip": "C:\\HelloKSP\\HelloKSP\\StokeEngine\\StokeEngine\\StokeEngine.cs",
+              "RelativeToolTip": "StokeEngine\\StokeEngine\\StokeEngine.cs",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAswIUAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-18T17:44:49.856Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+C:\HelloKSP\HelloKSP\HelloKSP\bin\Debug\HelloKSP.dll
+C:\HelloKSP\HelloKSP\HelloKSP\bin\Debug\HelloKSP.pdb
+C:\HelloKSP\HelloKSP\HelloKSP\obj\Debug\HelloKSP.csproj.AssemblyReference.cache
+C:\HelloKSP\HelloKSP\HelloKSP\obj\Debug\HelloKSP.csproj.CoreCompileInputs.cache
+C:\HelloKSP\HelloKSP\HelloKSP\obj\Debug\HelloKSP.dll
+C:\HelloKSP\HelloKSP\HelloKSP\obj\Debug\HelloKSP.pdb

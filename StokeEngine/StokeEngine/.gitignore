@@ -1,0 +1,25 @@
+# Build outputs
+bin/
+obj/
+
+# Visual Studio user-specific files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Ignore specific lock files
+*.lock
+.vsidx
+
+# Visual Studio cache
+*.tmp
+*.cache
+
+# OS
+.DS_Store
+Thumbs.db
+
+# KSP-specific cruft we don't want
+*.dll.mdb
