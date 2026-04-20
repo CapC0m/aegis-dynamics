@@ -7,8 +7,8 @@
     <ProjectGuid>{7978AE5D-EE6E-47F1-BE04-1FFE197AB107}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StokeEngine</RootNamespace>
-    <AssemblyName>StokeEngine</AssemblyName>
+    <RootNamespace>AegisDynamics</RootNamespace>
+    <AssemblyName>AegisDynamics</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -57,24 +57,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StokeEngine.cs" />
+    <Compile Include="AegisDynamics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="GameData\StokeEngine\Parts\Andromeda_125.cfg" />
-    <None Include="GameData\StokeEngine\Parts\Andromeda_1875.cfg" />
-    <None Include="GameData\StokeEngine\Parts\Andromeda_25.cfg" />
-    <None Include="GameData\StokeEngine\Parts\Andromeda_375.cfg" />
-    <None Include="GameData\StokeEngine\Parts\Andromeda_5.cfg" />
-    <None Include="GameData\StokeEngine\Patches\CleanupStoke.cfg" />
+    <None Include="GameData\AegisDynamics\Parts\Andromeda_125.cfg" />
+    <None Include="GameData\AegisDynamics\Parts\Andromeda_1875.cfg" />
+    <None Include="GameData\AegisDynamics\Parts\Andromeda_25.cfg" />
+    <None Include="GameData\AegisDynamics\Parts\Andromeda_375.cfg" />
+    <None Include="GameData\AegisDynamics\Parts\Andromeda_5.cfg" />
+    <None Include="GameData\AegisDynamics\Patches\CleanupStoke.cfg" />
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
-    <Content Include="GameData\StokeEngine\Plugins\StokeEngine.dll" />
+    <Content Include="GameData\AegisDynamics\Plugins\AegisDynamics.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y /I "$(TargetPath)" "C:\KSP-dev\GameData\StokeEngine\Plugins\"</PostBuildEvent>
+    <PostBuildEvent>xcopy /Y /I "$(TargetPath)" "C:\KSP-dev\GameData\AegisDynamics\Plugins\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

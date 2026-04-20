@@ -3,9 +3,9 @@ using UnityEngine;
 using KSP.UI.Screens;
 using System.Text;
 
-namespace StokeEngine
+namespace AegisDynamics
 {
-    public class ModuleStokeRingEngine : ModuleEnginesFX, ITorqueProvider
+    public class ModuleAegisRingEngine : ModuleEnginesFX, ITorqueProvider
     {
         // ---- Editor tweakables ----
         [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "Thrust Chambers"),
@@ -34,7 +34,7 @@ namespace StokeEngine
         [KSPField] public float tvcSlewRate = 4.0f;   // range [1..10]; higher = snappier, more oscillation
 
         // ---- Internal state ----
-        private const string CLONE_TX_NAME = "stokeChamberTransform";
+        private const string CLONE_TX_NAME = "aegisChamberTransform";
         private int lastBuiltCount = -1;
         private float lastBuiltRadius = -1f;
         private List<float> chamberAngles = new List<float>();  // radians, one per chamber
@@ -56,7 +56,7 @@ namespace StokeEngine
 
             if (!countChanged && !radiusChanged) return;
 
-            Debug.Log($"[StokeEngine] Update triggered: count={chamberCount} (was {lastBuiltCount}), " +
+            Debug.Log($"[AegisEngine] Update triggered: count={chamberCount} (was {lastBuiltCount}), " +
                       $"radius={ringRadius} (was {lastBuiltRadius})");
 
             BuildRing();
@@ -225,7 +225,7 @@ namespace StokeEngine
                 if (vacIsp > 0.1f)
                     maxFuelFlow = maxThrust / (vacIsp * 9.80665f);
             }
-            Debug.Log($"[StokeEngine] RescaleThrust: thrustPerChamber={thrustPerChamber}, " +
+            Debug.Log($"[AegisEngine] RescaleThrust: thrustPerChamber={thrustPerChamber}, " +
                       $"n={n}, maxThrust={maxThrust}, maxFuelFlow={maxFuelFlow}");
         }
     }
