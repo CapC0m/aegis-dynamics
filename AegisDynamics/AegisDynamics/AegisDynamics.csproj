@@ -61,17 +61,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="GameData\AegisDynamics\Parts\Andromeda_125.cfg" />
-    <None Include="GameData\AegisDynamics\Parts\Andromeda_1875.cfg" />
-    <None Include="GameData\AegisDynamics\Parts\Andromeda_25.cfg" />
-    <None Include="GameData\AegisDynamics\Parts\Andromeda_375.cfg" />
-    <None Include="GameData\AegisDynamics\Parts\Andromeda_5.cfg" />
-    <None Include="GameData\AegisDynamics\Patches\CleanupStoke.cfg" />
-    <None Include="README.md" />
+    <Content Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include=".gitignore" />
-    <Content Include="GameData\AegisDynamics\Plugins\AegisDynamics.dll" />
+    <Folder Include="GameData\AegisDynamics\Plugins\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

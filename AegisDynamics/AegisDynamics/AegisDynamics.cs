@@ -7,6 +7,7 @@ namespace AegisDynamics
 {
     public class ModuleAegisRingEngine : ModuleEnginesFX, ITorqueProvider
     {
+
         // ---- Editor tweakables ----
         [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "Thrust Chambers"),
          UI_FloatRange(minValue = 3f, maxValue = 24f, stepIncrement = 1f, scene = UI_Scene.Editor)]
@@ -158,14 +159,6 @@ namespace AegisDynamics
             }
         }
 
-        private void ResetMultipliers()
-        {
-            int n = thrustTransforms.Count;
-            if (n == 0) return;
-            float share = 1f / n;
-            for (int i = 0; i < n; i++)
-                thrustTransformMultipliers[i] = share;
-        }
 
         // ---- Ring construction ----
         private void BuildRing()
