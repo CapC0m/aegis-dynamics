@@ -75,6 +75,11 @@ Issues and PRs welcome. This is an early mod; expect rough edges.
 CC-BY-NC-SA 4.0 — see `LICENSE` for details.
 
 ## Changelog
+### v0.1.2
+- Added AegisDynamics.version file for KSP-AVC integration and future CKAN support
+- Verified compatibility with ReStock
+- Repository housekeeping (no user-facing changes)
+
 ### v0.1.1
 ⚠️ Breaking change: Craft files using v0.1.0 parts will not load with v0.1.1 — the part names changed. If you have saved craft using previous versions, you'll need to rebuild them with the new Aegis parts.
 
