@@ -31,3 +31,9 @@ desktop.ini
 release/
 "@ | Set-Content .gitignore
 release/
+
+@thumbs/
+
+
+@thumbs/
+
