@@ -1,95 +1,129 @@
 # Aegis Dynamics
-[![SpaceDock](https://img.shields.io/badge/SpaceDock-Download-5bc0de)](https://spacedock.info/mod/4218/Aegis%20Dynamics)
 
-A Kerbal Space Program mod adding reusable-style second-stage engines inspired by [Stoke Space's](https://www.stokespace.com/) Andromeda. Each part is a heatshield with a ring of thrust chambers around its perimeter — thrust vector control is achieved by differentially throttling the chambers instead of gimbaling a nozzle.
-
-## Gallery
-
-![Ring of chambers firing during ascent](docs/ascent.png)
-
-![Editor view with chamber count slider](docs/vab.png)
-
-![Engine-first reentry with heatshield glowing](docs/reentry.png)
-
-![Landing burn](docs/landing.png)
+KSP 1.12 mod adding regen-cooled heatshield engines inspired by Stoke Space's Andromeda upper stage. Combines a heatshield and ring of thrust chambers into a single integrated part, with thrust vector control via differential throttling.
 
 ## Features
 
-- **Five diameter variants**: 1.25m, 1.875m, 2.5m, 3.75m, 5m
-- **Modular chamber count**: 3–24 thrust chambers per engine, adjustable in the VAB
-- **Differential-throttle TVC**: no gimbal — attitude control comes from varying individual chamber throttles
-- **Integrated heatshield**: the engine itself acts as a reentry shield (high skin temperature tolerance)
-- **MechJeb-compatible**: reports torque authority correctly, works with ascent/landing guidance
-- **Waterfall plume effects**: per-chamber plumes with atmospheric pressure response
+**Two architectures**, both shipped:
 
-## Design philosophy
+- **Integrated parts** (Aspis through Scutum, 5 sizes): single-part heatshield engines with built-in TVC. Stock-playable, no MechJeb required.
+- **Composite architecture** (Shield 3.75m + Chamber): modular shield with 24 attach nodes; users place individual chambers manually. Requires MechJeb for differential throttle TVC. Mostly added for development purposes.
 
-Differential-throttle engines have fundamentally different handling characteristics than gimbaled ones. Authority is lower, response is slower, and there is **no roll authority at all** — you must provide roll via reaction wheels or RCS. This is intentional. The mod trades conventional responsiveness for the Stoke-style aesthetic and the gameplay discipline it demands.
+**Active heatshield cooling**: integrated parts consume propellant during reentry to dissipate convective heat. Replaces the stock Ablator system. Cooling auto-activates above threshold flux.
 
-## Installation
+**Chamber count slider**: in-editor adjustment of how many chambers each engine has. Thrust and mass scale accordingly.
 
-### Via CKAN
-_(Not yet listed — coming soon)_
+**Per-chamber visualization**: chambers spawn procedurally as transforms with individual Waterfall plumes. PAW shows live per-chamber throttle percentages.
 
-### Manual
-1. Download the latest release zip
-2. Extract the `GameData/` folder into your KSP install
-3. Verify `GameData/AegisDynamics/` exists
+**CryoTanks compatibility**: when CryoTanks is installed, all Aegis engines burn LqdHydrogen + Oxidizer at hydrolox Isp (450 vac / 380 sl).
+
+**ReStock compatibility**: integrated parts adapt their attach node positions when ReStock is detected.
+
+## Parts list
+
+### Integrated variants (no extra dependencies for TVC)
+
+| Part | Diameter | Default chambers | Thrust per chamber | Total thrust at default |
+|---|---|---|---|---|
+| Aspis | 1.25m | 6 | 30 kN | 180 kN |
+| Pelta | 1.875m | 9 | 40 kN | 360 kN |
+| Hoplon | 2.5m | 12 | 50 kN | 600 kN |
+| Thureos | 3.75m | 18 | 60 kN | 1080 kN |
+| Scutum | 5m | 24 | 80 kN | 1920 kN |
+
+Each variant accepts the chamber count slider (range 6–24 chambers per part). Thrust and mass adjust live in the VAB.
+
+### Composite architecture (MechJeb required for TVC)
+
+| Part | Description |
+|---|---|
+| Aegis Shield 3.75m | Passive 3.75m heatshield with 24 attach nodes for chambers |
+| Aegis Chamber | Individual 37.5 kN thrust chamber, attaches to shield mount nodes |
+
+To use: place the shield, then attach 24 chambers to its ring nodes (use 6x symmetry for efficiency). Enable differential throttle in MechJeb's Attitude Adjustment.
 
 ## Dependencies
 
-Required:
-- [Module Manager](https://forum.kerbalspaceprogram.com/topic/50533-module-manager/) 4.2.3+
-- [B9PartSwitch](https://github.com/blowfishpro/B9PartSwitch) 2.20+
-- [Waterfall](https://github.com/post-kerbin-mining-corporation/Waterfall) 0.10+
+**Required**:
+- ModuleManager (4.x)
+- B9PartSwitch (2.x)
+- Waterfall (0.10.x)
 
-Recommended:
-- [Stock Waterfall Effects](https://github.com/KnightofStJohn/StockWaterfallEffects) — the Andromeda's plume template comes from this mod
+**Recommended**:
+- Stock Waterfall Effects — for engine plume templates
+
+**Optional but supported**:
+- MechJeb — required for composite architecture TVC; helpful for integrated parts too
+- CryoTanks — switches all Aegis engines to hydrolox propellants
+- ReStock — visual adjustments for integrated parts
+
+## Installation
+
+1. Install dependencies via CKAN, or download from their respective pages
+2. Download the latest Aegis Dynamics release zip
+3. Extract to your KSP install — should look like `GameData/AegisDynamics/`
+4. Verify the mod loads: launch KSP, check the parts list under Engines
+
+CKAN support: pending listing. For now, install manually.
+
+## Usage tips
+
+**Integrated variants**: place like a heatshield. The chamber count slider is in the part's editor PAW. Differential TVC is automatic and works with stock SAS, MechJeb, or any flight assistance mod that uses ITorqueProvider.
+
+**Composite architecture**: place the shield. Open chamber's part info in the parts panel. Use 6x symmetry to attach 6 chambers at once; repeat 4 times to fill all 24 nodes. Save as a subassembly for reuse on future craft.
+
+**Active cooling**: works automatically during reentry. Skin temperature is held below 2400 K by consuming propellant from connected tanks. Plan your reentry budget — significant heating eats real fuel.
+
+**With CryoTanks**: install CryoTanks, then any Aegis part automatically uses LH2/Oxidizer instead of LF/Oxidizer. Use CryoTanks-style hydrolox tanks for proper drain ratios. Existing LF/Ox craft will need migration.
 
 ## Known limitations
 
-- No roll authority from the engine (by design, you should add reaction wheels)
-- Uses stock heatshield models for visuals (custom model planned for v0.2+)
-- 1.875m and 5m variants are rescaled stock heatshields; proportions may look slightly off
-- No RealFuels support yet (planned for v0.2)
-- Per-chamber plume variation not yet implemented (all chambers render identical plumes regardless of per-chamber thrust)
+- Composite architecture chambers must be placed manually (KSP symmetry can't populate internal ring nodes; 4 rounds of 6x symmetry works)
+- Composite architecture requires MechJeb for thrust vector control
+- All current parts use stock heatshield meshes with cfg modifications; custom models are deferred
+- Per-chamber plume variation on integrated parts is not yet implemented
+- RealFuels and RSS compatibility not yet supported
+- Mass, cost, power, cooling etc : all those parameters will probably be re-balanced in the future. Feedback wanted !
 
-## Compatibility
+## Changelog
 
-- KSP 1.12.x
-- Tested with: Stock, Stock Waterfall Effects, MechJeb
-- Untested with: RealFuels, Deadly Reentry, FAR
+### v0.2.0 (current)
+- Added composite architecture: Aegis Shield 3.75m + Chamber
+- Added active heatshield cooling for integrated variants
+- Added chamber count slider with live mass and thrust scaling via `IPartMassModifier`
+- Added CryoTanks compatibility (hydrolox mode for engines and cooling)
+- Engine rebalance: smaller variants up, larger down, smoother scaling
+- License switch to MIT (after discussing with the community, the use of AI make licensing tricky at best. For now, MIT seems more permissive, may totally un-license later. Feedback appreciated)
+- Removed deprecated CleanupStoke.cfg patch
+
+### v0.1.3
+- Renamed mod from "Stoke Engine" to "Aegis Dynamics"
+- Greek-themed variant names (Aspis, Pelta, Hoplon, Thureos, Scutum)
+
+### v0.1.2
+- ReStock compatibility patch
+- KSP-AVC version file
+
+### v0.1.1
+- Initial public release
+
+## Development & Licensing
+
+Aegis Dynamics is developed with substantial AI coding assistance (Anthropic's Claude). All architectural decisions, balance tuning, debugging, and integration testing are performed by the human author. AI assistance is disclosed for transparency, not as a legal disclaimer. (after discussing with the community, the use of AI make licensing tricky at best. For now, MIT seems more permissive, may totally un-license later. Feedback appreciated)
+
+Licensed under the [MIT License](LICENSE). You can use, modify, redistribute, or fork this mod freely (including commercially). Just keep the copyright notice with any redistribution.
 
 ## Contributing
 
-Issues and PRs welcome. This is an early mod; expect rough edges.
+Bug reports and pull requests welcome. The mod is small enough that significant contributions can land quickly. Open an issue to discuss before writing patches for major architectural changes.
 
 ## Credits
 
-- Based on [Stoke Space Andromeda](https://www.stokespace.com/introducing-andromeda/) engine design
-- Plume templates from Stock Waterfall Effects
-- Stock heatshield models by Squad
+- Inspired by Stoke Space's Andromeda upper stage design
+- Built on Anthropic's Claude as a development collaborator
+- KSP modding ecosystem: ModuleManager, B9PartSwitch, Waterfall, ReStock, CryoTanks, MechJeb
+- Stock KSP heatshield meshes used by reference
 
-## License
+## Source
 
-CC-BY-NC-SA 4.0 — see `LICENSE` for details.
-
-## Changelog
-### v0.1.2
-- **ReStock compatibility**: attach node positions adjusted for ReStock's reauthored heatshield meshes when ReStock is installed
-- Added AegisDynamics.version file for KSP-AVC integration and future CKAN support
-- Internal: repository reorganization, no user-facing impact
-
-### v0.1.1
-⚠️ Breaking change: Craft files using v0.1.0 parts will not load with v0.1.1 — the part names changed. If you have saved craft using previous versions, you'll need to rebuild them with the new Aegis parts.
-
-- Mod renamed: Stoke Engine → Aegis Dynamics
-- Manufacturer renamed: Stoke-Analog Industries → Aegis Dynamics
-- Parts renamed with Greek shield theme: Aspis / Pelta / Hoplon / Thureos / Scutum
-- Engine re-tuning
-
-### v0.1
-- Initial release
-- Five diameter variants
-- Differential-throttle TVC with MechJeb compatibility
-- Waterfall plume integration
+[https://github.com/CapC0m/aegis-dynamics](#)
