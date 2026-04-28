@@ -86,8 +86,11 @@ CKAN support: pending listing. For now, install manually.
 - Mass, cost, power, cooling etc : all those parameters will probably be re-balanced in the future. Feedback wanted !
 
 ## Changelog
+### V0.3.0 (current)
+- Move from 5 dedicated parts to a single, TweakScaleable config
+- Removed the composite architecture parts
 
-### v0.2.0 (current)
+### v0.2.0
 - Added composite architecture: Aegis Shield 3.75m + Chamber
 - Added active heatshield cooling for integrated variants
 - Added chamber count slider with live mass and thrust scaling via `IPartMassModifier`
