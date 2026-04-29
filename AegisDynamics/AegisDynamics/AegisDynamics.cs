@@ -4,10 +4,10 @@ using UnityEngine;
 namespace AegisDynamics
 {
     /// <summary>
-    /// Aegis ring engine: heatshield-engine combo with N chambers in a ring.
-    /// Differential throttling provides pitch/yaw thrust vector control.
+    /// Aegis ring engine: a heatshield-engine combo with N chambers in a ring,
+    /// gimbaled together via stock ModuleGimbal for thrust vector control.
     /// </summary>
-    public class ModuleAegisRingEngine : ModuleEnginesFX, ITorqueProvider, IPartMassModifier
+    public class ModuleAegisRingEngine : ModuleEnginesFX, IPartMassModifier
     {
         // ===== Editor tweakables (PAW slider) =====
 
@@ -15,37 +15,24 @@ namespace AegisDynamics
          UI_FloatRange(minValue = 6f, maxValue = 36f, stepIncrement = 2f, scene = UI_Scene.Editor)]
         public float chamberCount = 18f;
 
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true,
-                  guiName = "TVC Authority", guiFormat = "P0"),
-         UI_FloatRange(minValue = 0f, maxValue = 1f, stepIncrement = 0.05f, scene = UI_Scene.All)]
-        public float tvcAuthority = 0.5f;
-
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true,
-                  guiName = "Differential TVC"),
-         UI_Toggle(scene = UI_Scene.All)]
-        public bool tvcEnabled = true;
-
         // ===== Cfg-driven =====
 
         [KSPField] public float ringRadius = 1.7f;
         [KSPField] public float thrustPerChamber = 60f;
-        [KSPField] public float minThrottleFrac = 0.4f;
         [KSPField] public float nozzleOffsetY = 0f;
-        [KSPField] public float baseMass = 2.7f;
+        [KSPField] public float baseMass = 5.6f;
         [KSPField] public float massPerChamber = 0.10f;
-
-        // ===== PAW readout =====
-
-        [KSPField(guiActive = true, guiName = "Chamber Throttles")]
-        public string chamberDebug = "";
+        [KSPField] public float gimbalThrustPenalty = 0.10f;
 
         // ===== Internal state =====
 
         private const string CHAMBER_TX_NAME = "aegisChamberTransform";
+        private const string GIMBAL_ANCHOR_NAME = "aegisGimbalAnchor";
+        private const string PLUME_TX_NAME = "aegisPlumeTransform";
         private int lastBuiltCount = -1;
         private float lastBuiltRadius = -1f;
-        private List<float> chamberAngles = new List<float>();
         private float lastRescaleIsp = -1f;
+        private float baseMaxFuelFlow = -1f;
 
         // ===== Lifecycle =====
 
@@ -66,7 +53,6 @@ namespace AegisDynamics
 
             if (!countChanged && !radiusChanged)
             {
-                // Detect atmosphereCurve changes (B9PartSwitch fuel mode swap)
                 if (atmosphereCurve != null)
                 {
                     float currentVacIsp = atmosphereCurve.Evaluate(0f);
@@ -89,19 +75,12 @@ namespace AegisDynamics
 
         public override void OnFixedUpdate()
         {
+            if (HighLogic.LoadedSceneIsFlight && vessel != null && vessel.loaded)
+            {
+                ApplyGimbalThrustReduction();
+            }
+
             base.OnFixedUpdate();
-
-            if (!HighLogic.LoadedSceneIsFlight) return;
-            if (vessel == null || !vessel.loaded) return;
-            if (thrustTransforms == null || thrustTransformMultipliers == null) return;
-            if (thrustTransforms.Count == 0) return;
-            if (thrustTransforms.Count != thrustTransformMultipliers.Count) return;
-
-            if (!tvcEnabled || !isOperational || !EngineIgnited) return;
-            if (currentThrottle < 0.01f) return;
-
-            ApplyDifferentialThrottle(vessel.ctrlState.pitch, vessel.ctrlState.yaw);
-            UpdateChamberDebug();
         }
 
         // ===== Ring construction =====
@@ -111,28 +90,51 @@ namespace AegisDynamics
             Transform anchor = part.transform.Find("model");
             if (anchor == null) anchor = part.transform;
 
-            // Purge old chamber transforms
+            // Purge old transforms
             var toRemove = new List<GameObject>();
             foreach (Transform child in anchor)
-                if (child.name == CHAMBER_TX_NAME) toRemove.Add(child.gameObject);
+            {
+                if (child.name == CHAMBER_TX_NAME ||
+                    child.name == GIMBAL_ANCHOR_NAME ||
+                    child.name == PLUME_TX_NAME)
+                {
+                    toRemove.Add(child.gameObject);
+                }
+            }
             foreach (var go in toRemove) DestroyImmediate(go);
 
-            int n = Mathf.Max(1, (int)chamberCount);
-            chamberAngles.Clear();
+            // Gimbal anchor at part origin, oriented so its Z points along part -Y (thrust direction)
+            GameObject gimbalAnchor = new GameObject(GIMBAL_ANCHOR_NAME);
+            gimbalAnchor.transform.SetParent(anchor, false);
+            gimbalAnchor.transform.localPosition = Vector3.zero;
+            gimbalAnchor.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
 
+            int n = Mathf.Max(1, (int)chamberCount);
             for (int i = 0; i < n; i++)
             {
                 float angle = 2f * Mathf.PI * i / n;
-                chamberAngles.Add(angle);
+                float cosA = Mathf.Cos(angle);
+                float sinA = Mathf.Sin(angle);
 
+                // Chamber transform (used for thrust): under gimbal anchor, gimbals with engine
                 GameObject chamber = new GameObject(CHAMBER_TX_NAME);
-                chamber.transform.SetParent(anchor, false);
+                chamber.transform.SetParent(gimbalAnchor.transform, false);
                 chamber.transform.localPosition = new Vector3(
-                    Mathf.Cos(angle) * ringRadius,
-                    nozzleOffsetY,
-                    Mathf.Sin(angle) * ringRadius
+                    cosA * ringRadius,
+                    sinA * ringRadius,
+                    -nozzleOffsetY
                 );
-                chamber.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+                chamber.transform.localRotation = Quaternion.identity;
+
+                // Plume transform (used for Waterfall): under model directly, stays fixed
+                GameObject plume = new GameObject(PLUME_TX_NAME);
+                plume.transform.SetParent(anchor, false);
+                plume.transform.localPosition = new Vector3(
+                    cosA * ringRadius,
+                    nozzleOffsetY,
+                    sinA * ringRadius
+                );
+                plume.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
             }
 
             lastBuiltCount = n;
@@ -164,70 +166,31 @@ namespace AegisDynamics
             }
         }
 
-        // ===== Differential throttle TVC =====
+        // ===== Gimbal-driven thrust reduction =====
 
-        private void ApplyDifferentialThrottle(float pitchCmd, float yawCmd)
+        private void ApplyGimbalThrustReduction()
         {
-            int n = thrustTransforms.Count;
-            if (n == 0 || chamberAngles.Count != n) return;
+            Transform model = part.transform.Find("model");
+            if (model == null) return;
+            Transform anchor = model.Find(GIMBAL_ANCHOR_NAME);
+            if (anchor == null) return;
 
-            const float deadzone = 0.02f;
-            if (Mathf.Abs(pitchCmd) < deadzone) pitchCmd = 0f;
-            if (Mathf.Abs(yawCmd) < deadzone) yawCmd = 0f;
+            Quaternion defaultRot = Quaternion.Euler(90f, 0f, 0f);
+            Quaternion currentRot = anchor.localRotation;
+            Quaternion diff = currentRot * Quaternion.Inverse(defaultRot);
+            float angleDeg = Mathf.Acos(Mathf.Clamp(diff.w, -1f, 1f)) * 2f * Mathf.Rad2Deg;
 
-            float baseMult = 1f / n;
-            float sum = 0f;
+            const float MAX_GIMBAL_DEG = 5f;
+            float deflectionFraction = Mathf.Clamp01(angleDeg / MAX_GIMBAL_DEG);
+            float reduction = 1f - (deflectionFraction * gimbalThrustPenalty);
 
-            for (int i = 0; i < n; i++)
+            // Recompute base maxFuelFlow from current state, then apply reduction
+            if (atmosphereCurve != null)
             {
-                float theta = chamberAngles[i];
-                float cmd = pitchCmd * Mathf.Sin(theta) - yawCmd * Mathf.Cos(theta);
-                float target = baseMult * (1f + cmd * tvcAuthority);
-                target = Mathf.Clamp(target, baseMult * minThrottleFrac, baseMult * 2f);
-                thrustTransformMultipliers[i] = target;
-                sum += target;
+                float vacIsp = atmosphereCurve.Evaluate(0f);
+                if (vacIsp > 0.1f)
+                    maxFuelFlow = (maxThrust / (vacIsp * 9.80665f)) * reduction;
             }
-
-            // Normalize so total thrust is preserved
-            if (sum > 0.0001f)
-            {
-                float k = 1f / sum;
-                for (int i = 0; i < n; i++)
-                    thrustTransformMultipliers[i] *= k;
-            }
-        }
-
-        private void UpdateChamberDebug()
-        {
-            int n = thrustTransformMultipliers.Count;
-            if (n > 0 && n <= 12)
-            {
-                var sb = new System.Text.StringBuilder();
-                for (int i = 0; i < n; i++)
-                    sb.Append($"{(thrustTransformMultipliers[i] * n * 100f):F0}% ");
-                chamberDebug = sb.ToString().TrimEnd();
-            }
-            else
-            {
-                chamberDebug = $"({n} chambers)";
-            }
-        }
-
-        // ===== ITorqueProvider =====
-
-        public void GetPotentialTorque(out Vector3 pos, out Vector3 neg)
-        {
-            pos = neg = Vector3.zero;
-            if (!tvcEnabled || !isOperational) return;
-
-            // Use raw ringRadius — TweakScale modifies this value via exponent override.
-            // Don't multiply by anchor scale; that would double-count.
-            float thrustNow = finalThrust > 0f ? finalThrust : maxThrust;
-            float effectiveArm = ringRadius * (1f - minThrottleFrac) / (1f + minThrottleFrac);
-            float pitchYawTorque = thrustNow * effectiveArm * tvcAuthority * 0.6f;
-
-            pos = new Vector3(pitchYawTorque, 0f, pitchYawTorque);
-            neg = pos;
         }
 
         // ===== IPartMassModifier =====
@@ -247,7 +210,6 @@ namespace AegisDynamics
 
     /// <summary>
     /// Active heatshield cooling: consumes propellant during reentry to dissipate heat flux.
-    /// Replaces stock ablator. Activates when net flux exceeds threshold.
     /// </summary>
     public class ModuleAegisActiveCooling : PartModule
     {
