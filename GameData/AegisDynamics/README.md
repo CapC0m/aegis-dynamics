@@ -38,7 +38,7 @@ During reentry, active cooling activates automatically when heat flux exceeds th
 ## Changelog
 ## v0.3.2 — Stock plume integration
 ### Stock plume integration
-This update solely focuses on making Waterfall and Stock Waterfall Effects a **required** dependancy instead of a required one. The mod now works without these mods installed, although they are still strongly recommended for your eye's comfort.
+This update solely focuses on making Waterfall and Stock Waterfall Effects a **required** dependency instead of a required one. The mod now works without these mods installed, although they are still strongly recommended for your eye's comfort.
 
 
 ## v0.3.1 — Single TweakScalable Engine, Stock Gimbal TVC
