@@ -33,6 +33,7 @@ namespace AegisDynamics
         private float lastBuiltRadius = -1f;
         private float lastRescaleIsp = -1f;
         private float baseMaxFuelFlow = -1f;
+        private List<float> chamberAngles = new List<float>();
 
         // ===== Lifecycle =====
 
