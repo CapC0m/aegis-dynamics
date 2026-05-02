@@ -36,6 +36,14 @@ During reentry, active cooling activates automatically when heat flux exceeds th
 
 
 ## Changelog
+## v0.3.3 - TVC visual effects
+### TVC visual effects
+Each chamber's plume now visibly varies during gimbal action, giving visual feedback for thrust vector control. Chambers on the active side of the ring brighten/grow while opposite chambers dim/shrink, creating a "differential throttle" appearance. Works with both stock effects and Waterfall.
+
+### Re-entry rebalance
+The part's thermal resistance was slightly lowered again to make active cooling more of a requirement.
+
+
 ## v0.3.2 — Stock plume integration
 ### Stock plume integration
 This update solely focuses on making Waterfall and Stock Waterfall Effects a **required** dependency instead of a required one. The mod now works without these mods installed, although they are still strongly recommended for your eye's comfort.
