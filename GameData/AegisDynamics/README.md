@@ -5,11 +5,11 @@ KSP 1.12 mod adding regen-cooled heatshield engines inspired by Stoke Space's An
 ## Features
 
 - **Single TweakScalable engine** (1.25m to 7.5m) replacing five fixed variants
-- **Adjustable chamber count** (6 to 36) — each chamber adds thrust and mass
-- **Active heatshield cooling** — burns propellant during reentry to absorb heat
+- **Adjustable chamber count** (6 to 36), each chamber adds thrust and mass
+- **Active heatshield cooling** (burns propellant during reentry to absorb heat)
 - **Stock gimbal TVC** with slight thrust reduction during gimbal action
-- **CryoTanks compatibility** — auto-swaps to LH2 + Oxidizer when CryoTanks is installed
-- **ReStock compatibility** — adjusted attach node positioning
+- **CryoTanks compatibility**, all three fuel modes are implemented, complete with dedicated Waterfall plumes
+- **ReStock compatibility** (adjusted attach node positioning)
 
 ## Dependencies
 ### Required dependencies
@@ -36,6 +36,10 @@ During reentry, active cooling activates automatically when heat flux exceeds th
 
 
 ## Changelog
+## v0.3.4 - CryoTanks fuel switch
+### CryoTanks fuel switch
+Using CryoTanks will no longer force the engine to run on HydroLOx. KeroLOx and MethaLOx are added as options, with matching performances (probably not balanced perfectly) and Waterfall plumes (if installed)
+
 ## v0.3.3 - TVC visual effects
 ### TVC visual effects
 Each chamber's plume now visibly varies during gimbal action, giving visual feedback for thrust vector control. Chambers on the active side of the ring brighten/grow while opposite chambers dim/shrink, creating a "differential throttle" appearance. Works with both stock effects and Waterfall.
